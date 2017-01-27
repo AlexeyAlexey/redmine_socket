@@ -3,6 +3,8 @@ defmodule RedmineSocket.UserSocket do
 
   ## Channels
   # channel "room:*", RedmineSocket.RoomChannel
+  
+  channel "global_chat:*", RedmineSocket.GlobalChatChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -19,6 +21,18 @@ defmodule RedmineSocket.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+  @max_age 2 * 7 * 24 * 60 * 60
+  def connect(%{"token" => token}, socket) do
+    #IO.puts Phoenix.Token.sign("secret key", "salt", user.id)
+    #IO.inspect Phoenix.Token.verify(socket, "salt", token)
+    case Phoenix.Token.verify(socket, "salt", token, max_age: @max_age, key_digest: :sha) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user_id, user_id)}
+      {:error, _reason} ->
+        :error        
+    end
+  end
+
   def connect(_params, socket) do
     {:ok, socket}
   end
