@@ -1,4 +1,4 @@
-# RedmineSocket
+# RedmineSocket (https://github.com/AlexeyAlexey/redmine_phoenix_socket/tree/develop)
 
 App is used as ws server by [redmine_phoenix_socket](https://github.com/AlexeyAlexey/redmine_phoenix_socket) that is redmine plugin
 
